@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Cumpleaños</title>
+    <style>
+        /* Estilos CSS para centrar y dimensionar la imagen */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        .invitacion-container {
+            max-width: 100%;
+            max-height: 100%;
+            /* Agrega el cursor de puntero para indicar interactividad (opcional) */
+            cursor: pointer; 
+        }
+        .invitacion-container img {
+            max-width: 100%;
+            max-height: 100vh;
+            display: block;
+            height: auto;
+        }
+        /* Oculta completamente el elemento de audio */
+        #audioFondo {
+            display: none;
+        }
+
+        /* ⚠️ Se elimina la clase .tap-indicator y el @keyframes pulse */
+    </style>
+</head>
+<body>
+
+    <div class="invitacion-container">
+        <img src="cumpleanos.jpg" alt="Invitación de Cumpleaños Piero Alessandro">
+        
+        </div>
+
+    <audio id="audioFondo" loop preload="auto">
+        <source src="tu_cancion.mp3" type="audio/mp3">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <script>
+        // Función que intenta reproducir el audio.
+        function startAudio() {
+            const audio = document.getElementById('audioFondo');
+
+            audio.play()
+                .then(() => {
+                    // Éxito: El audio comenzó. Removemos el listener para que no se vuelva a ejecutar.
+                    document.removeEventListener('click', startAudio);
+                    document.removeEventListener('touchstart', startAudio);
+                })
+                .catch(error => {
+                    // Falla: Si el navegador todavía lo bloquea, no hacemos nada.
+                    // El listener se mantiene, esperando una interacción futura del usuario.
+                    console.error("El audio aún no pudo iniciarse, esperando interacción del usuario:", error);
+                });
+        }
+        
+        // Escuchamos el evento 'click' (mouse) y 'touchstart' (táctil/móvil)
+        // La música sonará apenas el usuario haga el primer clic o toque.
+        document.addEventListener('click', startAudio);
+        document.addEventListener('touchstart', startAudio);
+    </script>
+
+</body>
+</html>
